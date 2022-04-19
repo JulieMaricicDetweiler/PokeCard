@@ -4,11 +4,11 @@
 using namespace std;
 class CardNode {
     string name;
-    double price;
+    float price;
     string set;
     string rarity;
 public:
-    CardNode(string name, double price, string set, string rarity) {
+    CardNode(string name, float price, string set, string rarity) {
         this->name = name;
         this->price = price;
         this->set = set;
@@ -19,7 +19,7 @@ public:
             return true;
         }
     }
-    double GetPrice() {
+    float GetPrice() {
         return price;
     }
     string GetName() {
@@ -38,10 +38,10 @@ private:
     map<CardNode, vector<string>> cardToAttribute;//from CardNode, points to all its attributes
     map<string, vector<CardNode>> attributeToCard;//from Attribute, points to all its CardNodes
 public:
-    void InsertNodes(string name, double price, string set, string rarity);//initializes basically everything
+    void InsertNodes(string name, float price, string set, string rarity);//initializes basically everything
 };
 
-void AdjacencyList::InsertNodes(string name, double price, string set, string rarity) {
+void AdjacencyList::InsertNodes(string name, float price, string set, string rarity) {
     CardNode insertNode = CardNode(name, price, set, rarity);
     vector<string> insertVector = {name, to_string(price), set, rarity};
     cardToAttribute.insert(pair<CardNode, vector<string>>(insertNode, insertVector));
