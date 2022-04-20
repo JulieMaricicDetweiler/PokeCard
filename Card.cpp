@@ -21,9 +21,9 @@ void Card::setPriority(float _priority)
 void Card::printCard() const
 {
     cout << "Name: " << this->name << endl;
-    cout << "Rarity: " << this->rarity <<endl;
-    cout << "Price: $" << fixed << setprecision(2) << this->price <<endl;
-    cout << "Set: " << this->card_set << endl;
+    cout << setw(12) << "Rarity: " << this->rarity <<endl;
+    cout << setw(12) << "Price: $" << fixed << setprecision(2) << this->price <<endl;
+    cout << setw(9) << "Set: " << this->card_set << endl;
     cout << endl;
     cout << "---------------------------------------------" << endl;
     cout << endl;

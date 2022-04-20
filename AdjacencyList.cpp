@@ -1,4 +1,5 @@
 #include "AdjacencyList.h"
+
 void AdjacencyList::InsertNodes(string name, float price, string set, string rarity, float priority) {
     Card insertNode = Card(name, rarity, price, set, priority);
     vector<string> insertVector = {name, to_string(price), set, rarity};
@@ -42,6 +43,10 @@ void AdjacencyList::GetTop10()
     int count = 0;
     while(count < 10)
     {
+        if(count < 9)
+        {
+            cout << " ";
+        }
         cout << count + 1 << ". ";
         iter->first.printCard();
         iter++;

@@ -4,10 +4,12 @@
 #include <queue>
 #include <string>
 #include <cmath>
+#include <chrono>
 #include "Card.h"
 #include "AdjacencyList.h"
 #include "Heap.h"
 using namespace std;
+using namespace std::chrono;
 
 float getPriceScore(float from, float to, float price)
 {
@@ -76,8 +78,16 @@ int main()
         float nameImp = stof(nameImpStr);
 
         string desiredRarity;
-        cout << "Please enter the desired rarity of your card:" << endl;
-
+        cout << "Please enter the desired rarity of your card (choose from the rarities below):" << endl;
+        for(int i = 0; i < rarityVec.size(); ++i)
+        {
+            cout << rarityVec[i];
+            if(i != rarityVec.size() - 1)
+            {
+                cout << ", ";
+            }
+        }
+        cout << endl;
         getline(cin, desiredRarity);
         cout << "On a scale of 1-10, how important is rarity to you?" << endl;
         getline(cin, rareImpStr);
@@ -109,6 +119,7 @@ int main()
 
     string filePath = "cards.csv";
     ifstream inFile(filePath);
+    auto start = high_resolution_clock::now();
     if(inFile.is_open())
     {
         string line;
@@ -135,7 +146,7 @@ int main()
             priority += getRarityScore(rarityVec, rarity, desiredRarity) * rareImp;
             float price = stof(priceTemp.substr(1, priceTemp.length() - 2));
             priority += getPriceScore(from, to, price) * (priceImp);
-            if(card_set == desiredSet)
+            if(card_set.find(desiredSet) != string::npos)
             {
                 priority += setImp;
             }
@@ -158,4 +169,7 @@ int main()
     {
         adj.GetTop10();
     }
+    auto stop = high_resolution_clock::now();
+    auto progTime = duration_cast<milliseconds>(stop - start);
+    cout << "Time taken : " << progTime.count() << " milliseconds" << endl;
 }
