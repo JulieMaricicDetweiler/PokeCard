@@ -4,8 +4,9 @@
 #include <queue>
 #include <string>
 #include <cmath>
-//#include "Card.h"
+#include "Card.h"
 #include "AdjacencyList.h"
+#include "Heap.h"
 using namespace std;
 
 float getPriceScore(float from, float to, float price)
@@ -55,13 +56,18 @@ float getRarityScore(vector<string>& vec, string cardRarity, string userRarity)
 }
 int main()
 {
+
         vector<string> rarityVec = {"Common", "Uncommon", "Rare", "Promo", "Holo Rare", "Rare Ace", "Rare Break", "Ultra Rare", "Amazing Rare", "Prism Rare", "Shiny Holo Rare", "Classic Collection", "Secret Rare"};
 
         string nameImpStr;
-        float priceImp;
+        string priceImpStr;
         string rareImpStr;
-        float setImp;
+        string setImpStr;
 
+        string choiceStr;
+        cout << "Would you like to run this program using (1) a max heap or (2) an adjacency list?" << endl;
+        getline(cin, choiceStr);
+        int choice = stoi(choiceStr);
         string pokemon;
         cout << "Please enter the name of your desired Pokemon:" << endl;
         getline(cin, pokemon);
@@ -74,27 +80,32 @@ int main()
 
         getline(cin, desiredRarity);
         cout << "On a scale of 1-10, how important is rarity to you?" << endl;
-        getline(cin, nameImpStr);
-        float nameImp = stof(nameImpStr);
+        getline(cin, rareImpStr);
+        float rareImp = stof(rareImpStr);
 
-        float priceFrom;
-        float priceTo;
+        string fromStr;
+        string toStr;
         cout << "Please select a desired price range for your card:" << endl;
         cout << "From: ";
-        cin >> priceFrom;
+        getline(cin, fromStr);
+        float from = stof(fromStr);
         cout << "To: ";
-        cin >> priceTo;
+        getline(cin, toStr);
+        float to = stof(toStr);
         cout << "On a scale of 1-10, how important is price to you?" << endl;
-        cin >> priceImp;
+        getline(cin, priceImpStr);
+        float priceImp = stof(priceImpStr);
 
         string desiredSet;
         cout << "Please enter your desired set:" << endl;
-        cin >> desiredSet;
+        getline(cin, desiredSet);
         cout << "On a scale of 1-10, how important is the set to you?" << endl;
-        cin >> setImp;
+        getline(cin, setImpStr);
+        float setImp = stof(setImpStr);
         cout << endl;
 
     AdjacencyList adj;
+    Heap heap;
 
     string filePath = "cards.csv";
     ifstream inFile(filePath);
@@ -123,14 +134,28 @@ int main()
             }
             priority += getRarityScore(rarityVec, rarity, desiredRarity) * rareImp;
             float price = stof(priceTemp.substr(1, priceTemp.length() - 2));
-            priority += getPriceScore(priceFrom, priceTo, price) * (priceImp / (float)10);
+            priority += getPriceScore(from, to, price) * (priceImp);
             if(card_set == desiredSet)
             {
                 priority += setImp;
             }
-            //Card card(name, rarity, price, card_set, priority);
-            adj.InsertNodes(name, price, card_set, rarity, priority);
+            Card card(name, rarity, price, card_set, priority);
+            if(choice == 1)
+            {
+                heap.insert(card);
+            }
+            if(choice == 2)
+            {
+                adj.InsertNodes(name, price, card_set, rarity, priority);
+            }
         }
     }
-    adj.GetTop10();
+    if(choice == 1)
+    {
+        heap.getTop10();
+    }
+    else
+    {
+        adj.GetTop10();
+    }
 }

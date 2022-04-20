@@ -42,7 +42,7 @@ void AdjacencyList::GetTop10()
     int count = 0;
     while(count < 10)
     {
-        cout << count+1 << ". ";
+        cout << count + 1 << ". ";
         iter->first.printCard();
         iter++;
         count++;

@@ -14,6 +14,10 @@ int Card::getPriority() const
 {
     return this->priority;
 }
+void Card::setPriority(float _priority)
+{
+    this->priority = _priority;
+}
 void Card::printCard() const
 {
     cout << "Name: " << this->name << endl;

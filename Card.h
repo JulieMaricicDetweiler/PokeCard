@@ -11,11 +11,12 @@ private:
     string rarity;
     float price;
     string card_set;
-    int priority;
+    float priority;
 public:
     Card(string& name, string& rarity, float price, string& card_set, float priority);
     int getPriority() const;
     void printCard() const;
+    void setPriority(float _priority);
 
     bool operator<(const Card& a) const;
     bool operator>(const Card& a) const;
